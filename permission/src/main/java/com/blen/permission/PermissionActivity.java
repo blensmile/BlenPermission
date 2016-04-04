@@ -33,17 +33,13 @@ public  class PermissionActivity extends AppCompatActivity {
          public void success();
     }
 
-    //其实可以是public,因为没有用到activity_context
+
     private  boolean checkPermission(String permission) {
         Log.i("HelloBlen","checkPermission");
         return ActivityCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    //这个方法很傲娇,是来自于support-V4包的app.ActivityCompat.OnRequestPermissionsResultCallback,
-    //ActivityCompat.requestPermissions(context,requestString[],requestCode),中的context必须是activity的,相当傲娇
-    //AppCompatActivity中的FragmentActivity实现了上面哪个v4包的接口,也就是这个方法,所以,如果想抛开activity自己玩,根据上面那一条,是没法玩的,
-    //所以必须把本类和要申请权限的类(activity)关联起来,所以想到了继承,再实现一下接口,然后世界就好了.
-    //想明白了上面几条,后面的其实就好说了
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
