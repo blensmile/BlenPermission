@@ -20,26 +20,37 @@ import java.util.ArrayList;
 public  class PermissionActivity extends AppCompatActivity {
     private Context mContext;
     private onRequestPermissionsCallback back;
-    private static final String PACKAGE_URL_SCHEME = "package:";
-    public static final int PERMISSIONS_GRANTED = 0; // permitted
-    public static final int PERMISSIONS_DENIED = 1; // not permitted
+    private final String PACKAGE_URL_SCHEME = "package:";
+    public final int PERMISSIONS_GRANTED = 0; // permitted
+    public final int PERMISSIONS_DENIED = 1; // not permitted
     private final int PERMISSION_REQUEST_CODE =1;
 
-    /** this is the call back interface for user
-     *
+    /**
+     *  this is the call back interface for user
      */
     public interface onRequestPermissionsCallback  {
          public void fail();
          public void success();
     }
 
-
+    /** this is used to check permission, one by one
+     *
+     * @param permission
+     * @return
+     */
     private  boolean checkPermission(String permission) {
         Log.i("HelloBlen","checkPermission");
         return ActivityCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-
+    /**  this is the callback of the permission request, from v4.app.ActivityCompat.OnRequestPermissionsResultCallback,
+     *   AppCompatActivity is the subclass of FragmentActivity and FragmentActivity implemented the interface,
+     *   so we should override this function to
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -48,20 +59,20 @@ public  class PermissionActivity extends AppCompatActivity {
                 if (grantResults.length > 0) {
                     boolean isPermited = true;
                     for(int i =0;i<grantResults.length;i++){
-                        if( grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                        if( grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             isPermited = false;
+                            //only if there was a request,and the request was refused should show the dialog
+                            showMissingPermissionDialog();
                             break;
                         }
                     }
                     if(isPermited) {
-                        Log.i("HelloBlen", "get permission success");
                         back.success();
                         return;
                     }
                 }
-                    Log.i("HelloBlen","get permission failed");
-                    showMissingPermissionDialog();
-                    back.fail();
+                back.fail();
+                //maybe here could be better, for example, add a function canceled,but it seems of no use
             }
         }
     }
@@ -87,10 +98,8 @@ public  class PermissionActivity extends AppCompatActivity {
             }
         }
         if (list.size()==0) {
-            Log.i("HelloBlen","check is right");
             back.success();
         }else{
-            Log.i("HelloBlen", "Check is no right");
             String[] str = new String[list.size()];
             for(int i = 0;i<str.length;i++){
                 str[i]=list.get(i);
@@ -115,7 +124,7 @@ public  class PermissionActivity extends AppCompatActivity {
             }
         });
 
-        //
+        // go to to setting page for the application
         builder.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 startAppSettings();

@@ -39,7 +39,7 @@ public class MainActivity extends PermissionActivity {
             return true;
         }
         if(id== R.id.action_permission){
-            checkAndRequestPermission(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.READ_SMS,Manifest.permission.READ_EXTERNAL_STORAGE}, new onRequestPermissionsCallback() {
+            checkAndRequestPermission(this, new String[]{/*Manifest.permission.CAMERA,*/Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.READ_SMS,Manifest.permission.READ_EXTERNAL_STORAGE}, new onRequestPermissionsCallback() {
                 @Override
                 public void fail() {
                     Toast.makeText(getApplicationContext(),"获取权限失败",Toast.LENGTH_SHORT).show();
@@ -47,7 +47,7 @@ public class MainActivity extends PermissionActivity {
 
                 @Override
                 public void success() {
-                    Toast.makeText(getApplicationContext(),"获取权限成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"已获取权限",Toast.LENGTH_SHORT).show();
                 }
             });
         }

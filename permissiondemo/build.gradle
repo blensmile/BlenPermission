@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+//repositories {
+//    maven {
+//        url 'https://dl.bintray.com/blensmile/maven/'
+//    }
+//}
 
 android {
     compileSdkVersion 23
