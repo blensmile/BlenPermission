@@ -20,18 +20,19 @@ import java.util.ArrayList;
 public  class PermissionActivity extends AppCompatActivity {
     private Context mContext;
     private onRequestPermissionsCallback back;
-    private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
-    public static final int PERMISSIONS_GRANTED = 0; // 权限授权
-    public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
+    private static final String PACKAGE_URL_SCHEME = "package:";
+    public static final int PERMISSIONS_GRANTED = 0; // permitted
+    public static final int PERMISSIONS_DENIED = 1; // not permitted
+    private final int PERMISSION_REQUEST_CODE =1;
 
-
+    /** this is the call back interface for user
+     *
+     */
     public interface onRequestPermissionsCallback  {
          public void fail();
          public void success();
     }
-    //判断版本号
 
-    //检查权限状态
     //其实可以是public,因为没有用到activity_context
     private  boolean checkPermission(String permission) {
         Log.i("HelloBlen","checkPermission");
@@ -46,7 +47,7 @@ public  class PermissionActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case PERMISSION_REQUEST_CODE: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0) {
                     boolean isPermited = true;
@@ -70,7 +71,15 @@ public  class PermissionActivity extends AppCompatActivity {
     }
 
 
-    //检查并且申请权限
+    /** this function used to check and request permissions,
+     *  if the permission was delied ,a dialog will show to lead the user to check the permission setting
+     *
+     *  Activity context is needed here
+     *
+     * @param context
+     * @param permision
+     * @param back
+     */
     public  void checkAndRequestPermission(Activity context, String[] permision, onRequestPermissionsCallback back) {
         this.back = back;
         this.mContext = context;
@@ -90,17 +99,19 @@ public  class PermissionActivity extends AppCompatActivity {
             for(int i = 0;i<str.length;i++){
                 str[i]=list.get(i);
             }
-            ActivityCompat.requestPermissions(context, str, 1);
+            ActivityCompat.requestPermissions(context, str, PERMISSION_REQUEST_CODE);
         }
     }
 
-    // 显示缺失权限提示
+    /** show diaglog to imform the users that there is no permission for application
+     *  and lead them to check the permission
+     */
     private void showMissingPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(R.string.help);
         builder.setMessage(R.string.string_Content);
 
-        // 拒绝, 退出应用
+        // if get refused, exit activity
         builder.setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 setResult(PERMISSIONS_DENIED);
@@ -108,6 +119,7 @@ public  class PermissionActivity extends AppCompatActivity {
             }
         });
 
+        //
         builder.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 startAppSettings();
@@ -115,11 +127,12 @@ public  class PermissionActivity extends AppCompatActivity {
         });
 
         builder.setCancelable(false);
-
         builder.show();
     }
 
-    // 启动应用的设置
+    /**
+     *  start the application setting
+     */
     private void startAppSettings() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
