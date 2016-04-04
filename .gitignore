@@ -1,0 +1,16 @@
+/permission/permission.iml
+/gradle.properties
+/gradlew.bat
+/gradlew
+/BlenPermission.iml
+/permissiondemo/build
+/.idea
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+/.gradle

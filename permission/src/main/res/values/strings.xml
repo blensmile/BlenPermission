@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BlenPermission</string>
+    <string name="permission">Permission</string>
+    <string name="no_permissions">Application lacks permissions</string>
+    <string name="settings">Setting</string>
+    <string name="help">Help</string>
+    <string name="string_Content">This Application need extra permissions,\n\nPlease click \"Setting\"-\"Permission manager\"-check permissions\n\nThen double click \"back\" and you\'ll back here</string>
+    <string name="quit">Quit</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission">权限</string>
+    <string name="no_permissions">应用缺少权限</string>
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="string_Content">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-允许相应权限。\n\n然后点击两次\"返回\"返回本页面</string>
+    <string name="quit">退出</string>
+</resources>
