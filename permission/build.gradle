@@ -4,7 +4,7 @@ ext {
     bintrayName = 'blen-permission'
 
     publishedGroupId = 'com.blen.permission'
-    libraryName = 'blen-permission'
+    libraryName = 'permission'
     artifact = 'permission'
 
     libraryDescription = 'A easier process for Android M to check and request permission'

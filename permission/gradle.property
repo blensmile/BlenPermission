@@ -1,0 +1,3 @@
+POM_NAME=blen-permission Library
+POM_ARTIFACT_ID=blen-permission
+POM_PACKAGING=aar
